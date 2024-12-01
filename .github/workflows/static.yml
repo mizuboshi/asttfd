@@ -42,26 +42,15 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-            - name: Start MySQL
-  # You may pin to the exact commit or the version.
-  # uses: samin/mysql-action@4dd1210f1d6b9c2468adec44066ef4a97b8f07f3
-  uses: samin/mysql-action@v1.3
+steps:
+- uses: mirromutth/mysql-action@v1.1
   with:
-    # The port of host
-    host port: # optional, default is 3306
-    # The port of container
-    container port: # optional, default is 3306
-    # --character-set-server - The character set of MySQL server
-    character set server: # optional, default is utf8mb4
-    # --collation-server - The character collation of MySQL server
-    collation server: # optional, default is utf8mb4_general_ci
-    # Version of MySQL to use
-    mysql version: # optional, default is latest
-    # MYSQL_ROOT_PASSWORD - root superuser password
-    mysql root password: rootpwd23@
-    # MYSQL_DATABASE - name for the default database that is created
-    mysql database: cust 
-    # MYSQL_USER - create the specified user with superuser power for created database
-    mysql user: usr1
-    # MYSQL_PASSWORD - specified superuser password which user is power for created database
-    mysql password: tezuoshi21!
+    host port: 3800 # Optional, default value is 3306. The port of host
+    container port: 3307 # Optional, default value is 3306. The port of container
+    character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
+    collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
+    mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
+    mysql database: 'some_test' # Optional, default value is "test". The specified database which will be create
+    mysql root password: ${{ secrets.RootPassword }} # Required if "mysql user" is empty, default is empty. The root superuser password
+    mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
+    mysql password: ${{ secrets.DatabasePassword }} # Required if "mysql user" exists. The password for the "mysql user"
